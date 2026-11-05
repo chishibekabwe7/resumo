@@ -51,6 +51,50 @@ More resumes, more opportunities. That is the "mo" in Resumo.
 - **Email delivery** of finished documents (Resend)
 - **Installable PWA** that works on desktop and mobile
 
+## Diagrams
+
+The diagrams below describe how Resumo works. Click any image to open the full-size version.
+
+### Flowchart
+
+The user journey from login to exporting and emailing a finished resume.
+
+<p align="center">
+  <a href="docs/diagrams/01_flowchart.png">
+    <img src="docs/diagrams/01_flowchart.png" alt="Flowchart of the Resumo resume creation flow" width="500">
+  </a>
+</p>
+
+### Data Flow Diagram
+
+Level 1 data flow between the job seeker, the six core processes, the four data stores, and the external services (Gemini API and Resend).
+
+<p align="center">
+  <a href="docs/diagrams/02_data_flow_diagram.png">
+    <img src="docs/diagrams/02_data_flow_diagram.png" alt="Level 1 data flow diagram for Resumo" width="900">
+  </a>
+</p>
+
+### Algorithm: Tailor CV to Job Description
+
+How Resumo uses the Gemini API to tailor a resume to a pasted job description, including validation, retries, and a check that no facts are invented.
+
+<p align="center">
+  <a href="docs/diagrams/03_algorithm.png">
+    <img src="docs/diagrams/03_algorithm.png" alt="Algorithm flowchart for tailoring a CV to a job description" width="550">
+  </a>
+</p>
+
+### Database ERD
+
+The database structure for profiles, resumes, resume sections, exports, email deliveries, and AI requests.
+
+<p align="center">
+  <a href="docs/diagrams/04_database_erd.png">
+    <img src="docs/diagrams/04_database_erd.png" alt="Entity relationship diagram for the Resumo database" width="650">
+  </a>
+</p>
+
 ## Tech Stack
 
 | Area | Technologies |

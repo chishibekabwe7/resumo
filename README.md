@@ -1,12 +1,18 @@
 <div align="center">
 
-# Resumo
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="img/logos/resumo-logo-dark-bg.png">
+    <source media="(prefers-color-scheme: light)" srcset="img/logos/resumo-logo-color.png">
+    <img alt="Resumo" src="img/logos/resumo-badge.png" height="64">
+  </picture>
+</p>
 
 **Build a polished, professional resume in minutes, with a little help from AI.**
 
 [Live Demo](#) &nbsp;|&nbsp; [Report a Bug](../../issues) &nbsp;|&nbsp; [Request a Feature](../../issues)
 
-<img src="https://skillicons.dev/icons?i=html,css,js,react,vite,tailwind,django,flask,supabase,vercel,github,githubactions,pytest,vitest" alt="Tech stack icons" />
+<img src="https://skillicons.dev/icons?i=html,css,js,react,vite,tailwind,django,flask,supabase,vercel,github,githubactions,vitest" alt="Tech stack icons" />
 
 </div>
 
@@ -49,7 +55,7 @@ More resumes, more opportunities. That is the "mo" in Resumo.
 
 | Area | Technologies |
 |---|---|
-| Front end | HTML, CSS, JavaScript, React, Vite, Tailwind CSS, Lucide Icons, Google Fonts |
+| Front end | HTML, CSS, JavaScript, Bootstrap 5, React, Vite, Tailwind CSS, Lucide Icons, Google Fonts |
 | Backend | Django REST Framework |
 | Database, auth, storage | Supabase |
 | Email | Resend |
@@ -58,6 +64,8 @@ More resumes, more opportunities. That is the "mo" in Resumo.
 | Testing | Vitest, Playwright, pytest |
 | DevOps | GitHub, GitHub Actions |
 | Hosting | Vercel (front end), DigitalOcean (backend), Namecheap (domain) |
+
+The marketing website is built on HTML, CSS, JavaScript and Bootstrap; the resume builder app uses React.
 
 ## Getting Started
 
@@ -157,6 +165,20 @@ Tests run automatically on every push and pull request through GitHub Actions. A
 ## Screenshots
 
 _Screenshots will be added once the first version is deployed._
+
+## Brand Assets
+
+All logos are in `img/logos/`.
+
+| File | Description | Best used on |
+|---|---|---|
+| resumo-logo-color.png | Blue and green wordmark | Light backgrounds |
+| resumo-logo-dark-bg.png | White and green wordmark | Dark or colored backgrounds, such as the navbar |
+| resumo-logo-black.png | All-black wordmark | Plain light backgrounds and print |
+| resumo-logo-white.png | All-white wordmark | Dark backgrounds, such as the footer |
+| resumo-badge.png | Wordmark on a blue badge | Social previews and avatars |
+
+Brand colors: blue `#1842B6` and green `#26D48C`.
 
 ## Authors
 

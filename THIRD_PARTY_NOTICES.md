@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-Resumo's original code, text and assets are licensed under the MIT License (see [LICENSE](LICENSE)). The MIT License applies only to material created by the Resumo authors. The third-party materials below keep their own licenses and are not relicensed by this project.
+Resumo's original code, text and assets are proprietary and all rights are reserved by Chishibe Kabwe and Emmanuel Mwape (see [LICENSE](LICENSE)). Resumo is not open source. The Resumo Proprietary License applies only to material created by the Resumo authors. The third-party materials below keep their own licenses and are not relicensed by this project.
 
 ## HighTech website template
 
@@ -12,7 +12,7 @@ Resumo's original code, text and assets are licensed under the MIT License (see 
   - The "Designed by HTML Codex" credit link in the footer must stay in place unless a credit removal license is purchased from HTML Codex
   - The template may not be sold, rented, or sublicensed
 
-Because of the last condition, template files and the parts of them that remain unchanged are not covered by the MIT License in this repository.
+Because of the last condition, template files and the parts of them that remain unchanged are not covered by the Resumo Proprietary License. They remain under the HTML Codex license, and nothing in this repository grants additional rights in them. Only the original content, branding and code added by the Resumo authors is proprietary.
 
 ## Front-end libraries
 

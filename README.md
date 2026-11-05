@@ -115,7 +115,7 @@ The marketing website is built on HTML, CSS, JavaScript and Bootstrap; the resum
 
 ### Prerequisites
 
-- Node.js 18 or later
+- Node.js 20.19 or later
 - Python 3.10 or later
 - A Supabase project
 - API keys for Resend and the AI provider

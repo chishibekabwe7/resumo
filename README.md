@@ -167,4 +167,6 @@ _Screenshots will be added once the first version is deployed._
 
 ## License
 
-Released under the MIT License. See the `LICENSE` file for details.
+Released under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+The website's starter template and bundled libraries keep their own licenses. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

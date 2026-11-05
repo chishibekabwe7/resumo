@@ -20,6 +20,16 @@ Resumo is delivered as a fully deployed, installable Progressive Web App (PWA).
 
 **Project status:** In development (started 1 November 2026)
 
+## The Story Behind the Name
+
+Resumo is a blend of two ideas: **resume** and **mo**, short for "more."
+
+Every job seeker learns the same lesson sooner or later: one resume is never enough. A software role calls for a different story than a marketing role, and even two similar jobs deserve a CV shaped around what each employer is actually asking for. Rewriting from scratch every time is slow, and sending the same document everywhere is a missed chance.
+
+Resumo is built around that idea. It is a platform for making more resumes: more versions, more tailored, more polished, in less time. Enter your details once, and Resumo helps you shape them into as many resumes as your job search needs.
+
+More resumes, more opportunities. That is the "mo" in Resumo.
+
 ## Features
 
 - **Guided input forms** for personal details, education, experience, skills, and projects

@@ -9,7 +9,7 @@ Resumo's original code, text and assets are proprietary and all rights are reser
 - **License:** HTML Codex free template license, based on Creative Commons Attribution 4.0 International
 - **Key conditions:**
   - Free for personal and commercial use, and may be modified
-  - The "Designed by HTML Codex" credit link in the footer must stay in place unless a credit removal license is purchased from HTML Codex
+  - The template attribution credit in the footer must stay in place unless a credit removal license is purchased from HTML Codex
   - The template may not be sold, rented, or sublicensed
 
 Because of the last condition, template files and the parts of them that remain unchanged are not covered by the Resumo Proprietary License. They remain under the HTML Codex license, and nothing in this repository grants additional rights in them. Only the original content, branding and code added by the Resumo authors is proprietary.

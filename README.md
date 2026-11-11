@@ -2,9 +2,9 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="img/logos/resumo-logo-dark-bg.png">
-    <source media="(prefers-color-scheme: light)" srcset="img/logos/resumo-logo-color.png">
-    <img alt="Resumo" src="img/logos/resumo-badge.png" height="64">
+    <source media="(prefers-color-scheme: dark)" srcset="frontend/public/logos/resumo-logo-dark-bg.png">
+    <source media="(prefers-color-scheme: light)" srcset="frontend/public/logos/resumo-logo-color.png">
+    <img alt="Resumo" src="frontend/public/logos/resumo-badge.png" height="64">
   </picture>
 </p>
 
@@ -99,7 +99,7 @@ The database structure for profiles, resumes, resume sections, exports, email de
 
 | Area | Technologies |
 |---|---|
-| Front end | HTML, CSS, JavaScript, Bootstrap 5, React, Vite, Tailwind CSS, Lucide Icons, Google Fonts |
+| Front end | JavaScript, React, Vite, Tailwind CSS, Lucide Icons, Google Fonts |
 | Backend | Django REST Framework |
 | Database, auth, storage | Supabase |
 | Email | Resend |
@@ -108,8 +108,6 @@ The database structure for profiles, resumes, resume sections, exports, email de
 | Testing | Vitest, Playwright, pytest |
 | DevOps | GitHub, GitHub Actions |
 | Hosting | Vercel (front end), DigitalOcean (backend), Namecheap (domain) |
-
-The marketing website is built on HTML, CSS, JavaScript and Bootstrap; the resume builder app uses React.
 
 ## Getting Started
 
@@ -212,7 +210,7 @@ _Screenshots will be added once the first version is deployed._
 
 ## Brand Assets
 
-All logos are in `img/logos/`.
+All logos are in `frontend/public/logos/`.
 
 | File | Description | Best used on |
 |---|---|---|
@@ -235,4 +233,4 @@ Brand colors: blue `#1842B6` and green `#26D48C`.
 
 Released under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-The website's starter template and bundled libraries keep their own licenses. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for third-party notices.

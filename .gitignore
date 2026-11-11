@@ -1,6 +1,6 @@
-*:Zone.Identifier
-*Zone.Identifier
-.env
 node_modules/
+dist/
+.env
+*Zone.Identifier
 venv/
 __pycache__/

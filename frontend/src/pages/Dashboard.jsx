@@ -1,45 +1,37 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ConfirmDialog from '../components/ConfirmDialog'
+import { createSampleResume } from '../lib/sampleResume'
 
-function formatDate(isoDate) {
-  try {
-    return new Intl.DateTimeFormat(undefined, {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    }).format(new Date(isoDate))
-  } catch {
-    return 'Recently'
-  }
+function formatDate(iso) {
+  return new Intl.DateTimeFormat(undefined, {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(iso))
 }
 
 function Dashboard({ resumes, createResume, duplicateResume, deleteResume }) {
   const navigate = useNavigate()
+  const [pendingDelete, setPendingDelete] = useState(null)
 
-  const visibleResumes = useMemo(
-    () => resumes.filter((resume) => resume.title || resume.updatedAt),
+  useEffect(() => {
+    document.title = 'Resumo | Dashboard'
+  }, [])
+
+  const sorted = useMemo(
+    () => [...resumes].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()),
     [resumes]
   )
 
-  const handleCreate = () => {
-    const created = createResume()
-    navigate(`/editor/${created.id}`)
+  const handleNew = () => {
+    const resume = createResume()
+    navigate(`/editor/${resume.id}`)
   }
 
-  const handleDuplicate = (id) => {
-    const duplicated = duplicateResume(id)
-    if (duplicated) {
-      navigate(`/editor/${duplicated.id}`)
-    }
-  }
-
-  const handleDelete = (id) => {
-    const confirmed = window.confirm('Delete this resume? This cannot be undone.')
-    if (!confirmed) {
-      return
-    }
-
-    deleteResume(id)
+  const handleTryExample = () => {
+    const resume = createResume(createSampleResume())
+    navigate(`/editor/${resume.id}`)
   }
 
   return (
@@ -48,57 +40,55 @@ function Dashboard({ resumes, createResume, duplicateResume, deleteResume }) {
         <h1 className="text-2xl font-bold text-brand-blue sm:text-3xl">My Resumes</h1>
         <button
           type="button"
-          className="min-h-11 rounded-xl bg-brand-blue px-4 py-2 text-sm font-semibold text-white hover:bg-brand-blue/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-          onClick={handleCreate}
+          className="min-h-11 rounded-xl bg-brand-blue px-4 py-2 text-sm font-semibold text-white hover:bg-brand-blue/90"
+          onClick={handleNew}
         >
           New resume
         </button>
       </div>
 
-      {visibleResumes.length === 0 ? (
+      {sorted.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center">
           <h2 className="text-lg font-semibold text-slate-900">No resumes yet</h2>
-          <p className="mt-2 text-sm text-slate-600">Start your first resume and keep editing as needed.</p>
-          <button
-            type="button"
-            className="mt-5 min-h-11 rounded-xl bg-brand-blue px-5 py-2 text-sm font-semibold text-white hover:bg-brand-blue/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-            onClick={handleCreate}
-          >
-            Build my resume
-          </button>
+          <p className="mt-2 text-sm text-slate-600">Create your first resume or open a fictional example.</p>
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
+            <button type="button" className="min-h-11 rounded-xl bg-brand-blue px-4 py-2 text-sm font-semibold text-white" onClick={handleNew}>Build my resume</button>
+            <button type="button" className="min-h-11 rounded-xl border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700" onClick={handleTryExample}>Try with an example</button>
+          </div>
         </div>
       ) : (
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {visibleResumes.map((resume) => (
+          {sorted.map((resume) => (
             <li key={resume.id} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-              <button
-                type="button"
-                className="w-full rounded-lg text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-                onClick={() => navigate(`/editor/${resume.id}`)}
-              >
-                <p className="truncate text-base font-semibold text-slate-900">{resume.title || 'Untitled Resume'}</p>
-                <p className="mt-1 text-sm text-slate-600">Last edited {formatDate(resume.updatedAt)}</p>
-              </button>
+              <h2 className="truncate text-base font-semibold text-slate-900">{resume.title || 'Untitled Resume'}</h2>
+              <p className="mt-1 text-sm text-slate-600">Template: {resume.template}</p>
+              <p className="mt-1 text-sm text-slate-600">Last edited {formatDate(resume.updatedAt)}</p>
               <div className="mt-4 flex flex-wrap gap-2">
-                <button
-                  type="button"
-                  className="min-h-10 rounded-lg border border-slate-300 px-3 text-sm font-medium text-slate-700 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-blue"
-                  onClick={() => handleDuplicate(resume.id)}
-                >
-                  Duplicate
-                </button>
-                <button
-                  type="button"
-                  className="min-h-10 rounded-lg border border-red-200 px-3 text-sm font-medium text-red-700 hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                  onClick={() => handleDelete(resume.id)}
-                >
-                  Delete
-                </button>
+                <button type="button" className="min-h-10 rounded-lg bg-brand-blue px-3 text-sm font-medium text-white" onClick={() => navigate(`/editor/${resume.id}`)}>Open</button>
+                <button type="button" className="min-h-10 rounded-lg border border-slate-300 px-3 text-sm font-medium text-slate-700" onClick={() => {
+                  const item = duplicateResume(resume.id)
+                  if (item) navigate(`/editor/${item.id}`)
+                }}>Duplicate</button>
+                <button type="button" className="min-h-10 rounded-lg border border-red-200 px-3 text-sm font-medium text-red-700" onClick={() => setPendingDelete(resume.id)}>Delete</button>
               </div>
             </li>
           ))}
         </ul>
       )}
+
+      <ConfirmDialog
+        open={Boolean(pendingDelete)}
+        title="Delete resume"
+        description="This action cannot be undone."
+        confirmLabel="Delete"
+        onCancel={() => setPendingDelete(null)}
+        onConfirm={() => {
+          if (pendingDelete) {
+            deleteResume(pendingDelete)
+          }
+          setPendingDelete(null)
+        }}
+      />
     </section>
   )
 }

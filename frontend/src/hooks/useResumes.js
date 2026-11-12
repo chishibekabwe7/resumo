@@ -1,17 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createEmptyResume } from '../lib/resumeSchema'
+import { loadResumes, saveResumes } from '../lib/storage'
 
-const STORAGE_KEY = 'resumo.resumes'
-const SAVE_DELAY_MS = 450
-
-function readStoredResumes() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]')
-    return Array.isArray(parsed) ? parsed : []
-  } catch {
-    return []
-  }
-}
+const SAVE_DELAY_MS = 400
 
 function touchUpdatedAt(resume) {
   return {
@@ -20,84 +11,78 @@ function touchUpdatedAt(resume) {
   }
 }
 
-export function useResumes() {
+export function useResumes(onStorageFull) {
   const [resumes, setResumes] = useState(() => {
-    const stored = readStoredResumes()
-    return stored.length > 0 ? stored : [createEmptyResume()]
+    const stored = loadResumes()
+    return stored.length > 0 ? stored : []
   })
-  const [saveStatus, setSaveStatus] = useState('Saved')
-  const saveTimeout = useRef(null)
+  const [saveState, setSaveState] = useState('saved')
+  const timeoutRef = useRef(null)
 
   useEffect(() => {
-    setSaveStatus('Saving...')
-
-    if (saveTimeout.current) {
-      clearTimeout(saveTimeout.current)
+    if (timeoutRef.current) {
+      window.clearTimeout(timeoutRef.current)
     }
 
-    saveTimeout.current = setTimeout(() => {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(resumes))
-      setSaveStatus('Saved')
+    setSaveState('saving')
+
+    timeoutRef.current = window.setTimeout(() => {
+      const result = saveResumes(resumes, {
+        onStorageFull,
+      })
+      setSaveState(result.ok ? 'saved' : 'error')
     }, SAVE_DELAY_MS)
 
     return () => {
-      if (saveTimeout.current) {
-        clearTimeout(saveTimeout.current)
+      if (timeoutRef.current) {
+        window.clearTimeout(timeoutRef.current)
       }
     }
-  }, [resumes])
+  }, [onStorageFull, resumes])
 
-  const createResume = useCallback(() => {
-    const resume = createEmptyResume()
+  const getResume = useCallback(
+    (id) => resumes.find((resume) => resume.id === id) ?? null,
+    [resumes]
+  )
+
+  const createResume = useCallback((seed) => {
+    const base = seed ? { ...seed, id: crypto.randomUUID() } : createEmptyResume()
+    const resume = touchUpdatedAt(base)
     setResumes((prev) => [resume, ...prev])
     return resume
   }, [])
 
-  const updateResume = useCallback((id, updater) => {
-    let nextResume = null
-
+  const updateResume = useCallback((id, patch) => {
     setResumes((prev) =>
       prev.map((resume) => {
         if (resume.id !== id) {
           return resume
         }
 
-        const base = typeof updater === 'function' ? updater(resume) : { ...resume, ...updater }
-        nextResume = touchUpdatedAt(base)
-        return nextResume
+        const next = typeof patch === 'function' ? patch(resume) : { ...resume, ...patch }
+        return touchUpdatedAt(next)
       })
     )
-
-    return nextResume
   }, [])
 
   const duplicateResume = useCallback((id) => {
-    let created = null
+    const source = resumes.find((resume) => resume.id === id)
+    if (!source) {
+      return null
+    }
 
-    setResumes((prev) => {
-      const source = prev.find((resume) => resume.id === id)
-      if (!source) {
-        return prev
-      }
-
-      created = {
-        ...source,
-        id: createEmptyResume().id,
-        title: `${source.title} Copy`,
-        updatedAt: new Date().toISOString(),
-      }
-
-      return [created, ...prev]
+    const duplicate = touchUpdatedAt({
+      ...source,
+      id: crypto.randomUUID(),
+      title: `${source.title || 'Untitled Resume'} (copy)`,
     })
 
-    return created
-  }, [])
+    setResumes((prev) => [duplicate, ...prev])
+    return duplicate
+  }, [resumes])
 
   const deleteResume = useCallback((id) => {
-    setResumes((prev) => {
-      const next = prev.filter((resume) => resume.id !== id)
-      return next.length > 0 ? next : [createEmptyResume()]
-    })
+    setResumes((prev) => prev.filter((resume) => resume.id !== id))
   }, [])
 
   const sortedResumes = useMemo(
@@ -107,7 +92,8 @@ export function useResumes() {
 
   return {
     resumes: sortedResumes,
-    saveStatus,
+    saveState,
+    getResume,
     createResume,
     updateResume,
     duplicateResume,

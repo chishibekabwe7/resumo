@@ -1,71 +1,82 @@
-const DEFAULT_TEMPLATE = 'classic'
+const TEMPLATE_DEFAULT = 'classic'
 
-function createId() {
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-    return crypto.randomUUID()
-  }
-
-  return `resume-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+function newId() {
+  return crypto.randomUUID()
 }
 
-function createEntryId(prefix) {
-  return `${prefix}-${Math.random().toString(36).slice(2, 8)}`
+function emptyExperience() {
+  return {
+    id: newId(),
+    company: '',
+    title: '',
+    location: '',
+    startDate: '',
+    endDate: '',
+    current: false,
+    bullets: [''],
+  }
+}
+
+function emptyEducation() {
+  return {
+    id: newId(),
+    school: '',
+    degree: '',
+    field: '',
+    startDate: '',
+    endDate: '',
+    details: '',
+  }
+}
+
+function emptyProject() {
+  return {
+    id: newId(),
+    name: '',
+    link: '',
+    description: '',
+  }
 }
 
 export function createEmptyResume() {
-  const now = new Date().toISOString()
-
   return {
-    id: createId(),
+    id: newId(),
     title: 'Untitled Resume',
-    template: DEFAULT_TEMPLATE,
-    updatedAt: now,
-    personalDetails: {
+    template: TEMPLATE_DEFAULT,
+    updatedAt: new Date().toISOString(),
+    personal: {
       fullName: '',
       role: '',
       email: '',
       phone: '',
       location: '',
-      links: '',
-      photo: '',
+      website: '',
+      linkedin: '',
+      github: '',
+      photo: null,
     },
     summary: '',
-    experience: [
-      {
-        id: createEntryId('exp'),
-        company: '',
-        role: '',
-        startDate: '',
-        endDate: '',
-        location: '',
-        bullets: [''],
-      },
-    ],
-    education: [
-      {
-        id: createEntryId('edu'),
-        school: '',
-        degree: '',
-        startDate: '',
-        endDate: '',
-        location: '',
-      },
-    ],
-    skills: [''],
-    projects: [
-      {
-        id: createEntryId('proj'),
-        name: '',
-        description: '',
-        link: '',
-      },
-    ],
+    experience: [emptyExperience()],
+    education: [emptyEducation()],
+    skills: [],
+    projects: [emptyProject()],
   }
 }
 
+export function createEmptyExperience() {
+  return emptyExperience()
+}
+
+export function createEmptyEducation() {
+  return emptyEducation()
+}
+
+export function createEmptyProject() {
+  return emptyProject()
+}
+
 export const resumeTemplateOptions = [
-  {
-    value: DEFAULT_TEMPLATE,
-    label: 'Classic',
-  },
+  { value: 'classic', label: 'Classic' },
+  { value: 'modern', label: 'Modern' },
+  { value: 'bold', label: 'Bold' },
 ]
